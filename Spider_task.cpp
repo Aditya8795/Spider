@@ -12,7 +12,8 @@ using namespace std;
 
 
 
-class node{
+class node
+{
 	public:
 	   //the user data
        char name[20];
@@ -24,7 +25,7 @@ class node{
        node *next; //pointer to the address of the next node
        
        
-       };
+};
          
               
              
@@ -45,7 +46,8 @@ class node{
 		
 		
 	
-void display(node *(*head)){
+void display(node *(*head))
+{
 	system("CLS");
 	
 	node *temp;
@@ -53,8 +55,9 @@ void display(node *(*head)){
 	int counter=1;
 	
 	//traverse along the linked list
-	if(temp!=NULL){
-		cout<<"linked list are:--\n";
+	if(temp!=NULL)
+	{
+		cout<<"	Linked List is now:--\n";
 	
 	    while(temp->next!=NULL){
 	    	
@@ -66,17 +69,19 @@ void display(node *(*head)){
 	cout<<"Name No "<<counter<<":-"<<temp->name<<endl;
 	
 	}
-	else{
+	else
+	{
 		//if the List is Empty
-		cout<<"\n\nNothing to display\n";
+		cout<<"\n\nNothing to display - As list is Empty\n";
 	}
 	
 	system("pause>nul");
 	
 }
 
-// the recived arguments are 2 pointers both to the nodes that are to be swapped
-void swap(node *node1, node *node2){
+// the recived arguments are 2 pointers both to the nodes that are to be swapped - a mutator, changes the original list
+void swap(node *node1, node *node2)
+{
 	//temp storage of info while swapping takes place
 	node temp;
 	//swap individual data attributes
@@ -103,6 +108,85 @@ void swap(node *node1, node *node2){
 	// nodes swapped!
 }
 
+node* search(char *username, node *localhead)
+{
+	system("CLS");
+	node *temp;
+	temp=localhead;
+	//NOW I AM PASSING THE POINTER TO GUY BEFORE THE USER TO BE DELETED, UNLESS THE USER IS POINTED TO BE HEAD THEN ITS THE USER ITSEF- this is crazy!!
+	//check if list is empty
+	if(temp!=NULL)
+	{
+			//the first guy wont be considered, it starts from 2nd user 
+		if((strcmp(temp->name,username)==0))
+		{
+			return(temp);
+		}
+		
+		while(temp->next!=NULL)
+		{	
+		if((strcmp((temp->next)->name,username)==0))
+			{
+				//when found send the pointer to the user to the del_user()
+				return(temp);
+			}
+			
+			//move along the list
+			temp=temp->next;
+			
+		}
+		
+	}
+	else
+	{
+		cout<<"\n\nThis is a empty list! No Entry available for deletion! \n";
+		system("pause>nul");
+		return(NULL);
+		
+	}
+	
+	//if the whole list has been searched and this user hasnt been found and the list isnt empty then this =>
+	cout<<"\n\nNo entry with such a name was found, please check your spelling\n";
+	system("pause>nul");
+	return(NULL);
+	/*ORIGINAL METHOD TO FIND THE USER TO BE DELETED, above i will try to get the guy before the user
+	//check if list is empty
+	if(temp!=NULL)
+	{
+		
+		do
+		{
+			if((strcmp(temp->name,username)==0))
+			{
+				//when found send the pointer to the user to the del_user()
+				return(temp);
+			}
+			//move along the list
+			temp=temp->next;
+		}while(temp->next!=NULL);
+		
+		//the last guy is pointing to NULL, just in case this user is at the end..
+		if((strcmp(temp->name,username)==0))
+			{
+				return(temp);
+			}
+	}
+	else
+	{
+		cout<<"\n\nThis is a empty list! No Entry available for deletion! \n";
+		system("pause>nul");
+		return(NULL);
+		
+	}
+	
+	//if the whole list has been searched and this user hasnt been found and the list isnt empty then this =>
+	cout<<"\n\nNo entry with such a name was found, please check your spelling\n";
+	system("pause>nul");
+	return(NULL);
+	*/
+	
+}
+//- a mutator, changes the original list
 void add_user(node **head){
 	system("CLS");
 	
@@ -175,9 +259,10 @@ void add_user(node **head){
 	}
 }
 
+//I am going to implement BUBBLE SORT - a mutator, changes the original list
 void sort_users(node **head){
 	system("CLS");
-	
+		
 	int swapped;
 	
 	//this a temporary node pointer - used to traverse the linked list
@@ -223,12 +308,32 @@ void sort_users(node **head){
 	
 }
 
+//- a mutator, changes the original list
+void del_user(node *user)
+{
+	node *temp;
+
+	system("CLS");
+		
+	if(user==NULL)
+	{
+		//this means either empty list OR no such user found
+		return;
+	}
+	
+	temp=user;
+	
+	
+	cout<<"\n\n"<<(user)->name<<" has been deleted \n";
+	system("pause>nul");
+}
+
 
 int main(){
 	
 	int choice=0;
 	class node *head = NULL; //THE head (node pointer) is intialized and made to point to NULL
-	
+	char name_user[20];
 	while(1){
 		
 	
@@ -247,6 +352,12 @@ int main(){
 		break;
 		
 		case 2:sort_users(&head);
+		break;
+		
+		case 3:system("CLS");
+		cout<<"\n Enter the name of the user who you want to delete\n";
+		cin>>name_user;
+		del_user(search(name_user,head));
 		break;
 		
 		case 0: exit(0);
