@@ -4,6 +4,7 @@
 #include<ctype.h>
 #include<limits.h>
 #include<stdio.h>
+#include<string.h>
 //namespaces are used to avoid naming conflicts, so instead of using std::cout (ie standard namespace) inorder to use cout
 //so this statement sets the default namespace as std, to avoid errors when we directly use cout.. etc
 using namespace std;
@@ -46,24 +47,60 @@ class node{
 	
 void display(node *(*head)){
 	system("CLS");
-	cout<<"displaying the list!!";
 	
 	node *temp;
 	temp=*(head);
 	int counter=1;
 	
+	//traverse along the linked list
 	if(temp!=NULL){
 		cout<<"linked list are:--\n";
 	
-	while(temp->next!=NULL){
-		cout<<"Name No "<<counter<<":-"<<temp->name<<"\n";
-		temp=temp->next;
-	}
-	cout<<"Last Name:-"<<temp->name<<endl;
+	    while(temp->next!=NULL){
+	    	
+		    cout<<"Name No "<<counter<<":-"<<temp->name<<"\n";
+		    temp=temp->next;
+		    counter++; // keeps track of the nth node (the no)
+	    }
+	    
+	cout<<"Name No "<<counter<<":-"<<temp->name<<endl;
 	
 	}
+	else{
+		//if the List is Empty
+		cout<<"\n\nNothing to display\n";
+	}
+	
 	system("pause>nul");
-	counter++;
+	
+}
+
+// the recived arguments are 2 pointers both to the nodes that are to be swapped
+void swap(node *node1, node *node2){
+	//temp storage of info while swapping takes place
+	node temp;
+	//swap individual data attributes
+	strcpy(temp.name, node1->name);
+	strcpy(node1->name,node2->name);
+	strcpy(node2->name,temp.name);
+	
+	temp.age=node1->age;
+	node1->age=node2->age;
+	node2->age=temp.age;
+	
+	strcpy(temp.occupation, node1->occupation);
+	strcpy(node1->occupation,node2->occupation);
+	strcpy(node2->occupation,temp.occupation);
+	
+	strcpy(temp.location, node1->location);
+	strcpy(node1->location,node2->location);
+	strcpy(node2->location,temp.location);
+	
+	temp.gender=node1->gender;
+	node1->gender=node2->gender;
+	node2->gender=temp.gender;
+	
+	// nodes swapped!
 }
 
 void add_user(node **head){
@@ -103,9 +140,6 @@ void add_user(node **head){
 		cin>>(*head)->location;
 		cout<<"Enter the new user's gender (M/F) : ";
 		cin>>(*head)->gender;
-		if((*head)!=NULL){
-			cout<<"head no longer null";
-		}
 	}
 	else{
 		//as the list HAS a head node, we set temp to point to the HEAD node
@@ -141,9 +175,54 @@ void add_user(node **head){
 	}
 }
 
-void sort_users(){
+void sort_users(node **head){
+	system("CLS");
+	
+	int swapped;
+	
+	//this a temporary node pointer - used to traverse the linked list
+	node *temp;
+	
+	//this ptr is used to limit the itrative round as part of the linked list gets sorted, it keeps the sorting to the unsorted part
+	node *ptr;
+	ptr=NULL;
+	
+	//check if its a Empty List
+	if(*head==NULL)
+	{
+		cout<<"\n\n\n This is a Empty List, Nothing to SORT.\n\n";
+		system("pause>nul");
+		return;
+	}
+	else
+	{
+		do
+		{
+			swapped=0; //so the loop will exit unless 2 nodes are swapped in this itrative round (ie swapped is set to a non-zero value)
+			temp=*head;
+			
+			//start of itrative round
+			while(temp->next!=ptr)
+			{
+				if((strcmp(temp->name,(temp->next)->name))>0)
+				{
+					swap(temp,temp->next);
+					swapped=1;
+				}
+				//check pairwise and move on along the list
+				temp=temp->next;
+			}
+			//once the nth round is completed those n sorted elements (from the end) are not to be checked anymore (a waste of time)
+			ptr=temp;
+			
+			
+		}while(swapped);
+	}
+	
+	
 	
 }
+
 
 int main(){
 	
@@ -167,7 +246,7 @@ int main(){
 		case 1:add_user(&head);
 		break;
 		
-		case 2:
+		case 2:sort_users(&head);
 		break;
 		
 		case 0: exit(0);
