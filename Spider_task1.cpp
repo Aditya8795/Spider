@@ -52,6 +52,8 @@ void display(node *head){
 	temp=head;
 	int counter=1;
 	
+	//mindstormer, look here head always remains NULl The below code never executes
+	
 	if(head!=NULL){
 		cout<<"linked list are:--\n";
 	
@@ -72,6 +74,7 @@ void add_user(node *head){
 	//this a temporary node pointer
 	node *temp;
 	
+	//mindstormer as head is always NULL this never goes to the else condition
 	if(head==NULL){
 		//now as head was pointing to NULL, we make it point to a new node(the HEAD NODE)
 		head=new node;
@@ -83,6 +86,7 @@ void add_user(node *head){
 		cin>>head->name;
 		cout<<"Enter the new user's age : ";
 		cin>>head->age;
+		//big problem - I GAVE UP
 		/* Tried a lot of stuff.. cant seem to easily make sure user enters only intergers
 		if(!isdigit(temp1)){
 			localhead->age=temp1;
@@ -104,6 +108,7 @@ void add_user(node *head){
 		cout<<"Enter the new user's gender (M/F) : ";
 		cin>>head->gender;
 		if(head!=NULL){
+			
 			cout<<"head no longer null";
 		}
 	}
