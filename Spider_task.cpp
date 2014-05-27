@@ -40,6 +40,7 @@ class node
 		
 */		
 	
+//displays the state of the linked list after every operation
 void display(node *(*head))
 {
 	system("CLS");
@@ -103,6 +104,7 @@ void swap(node *node1, node *node2)
 	// nodes swapped!
 }
 
+//this is used to return the node pointer of the user who is to be deleted, using him name..
 node* search(char *username, node *localhead)
 {
 	system("CLS");
@@ -186,6 +188,7 @@ node* search(char *username, node *localhead)
 	
 }
 
+//in order to find median, this sorts the ages
 void sort(int a[100], int array_size)
 {
 
@@ -207,6 +210,7 @@ void sort(int a[100], int array_size)
 }
 
 //==================================================================
+
 // the 10 functions
 
 //- a mutator, changes the original list
@@ -461,6 +465,38 @@ void median_age(node *head)
 	system("pause>nul");
 }
 
+void average_age(node *head)
+{
+	system("CLS");
+	float sum=0,n=1,ans;
+	node *temp;
+	temp=head;
+	if(head==NULL)
+	{
+		cout<<"\n\n The list is empty, NO Average exists"<<endl;
+		system("pause>nul");
+		return;
+		
+	}
+	if(head->next==NULL)
+	{
+		cout<<"\n\n The list has only one element, the average age is: "<<head->age<<endl;
+		system("pause>nul");
+		return;
+	}
+	while(temp->next!=NULL)
+	{
+		sum=sum+(temp->age);
+		temp=temp->next;
+		n++;
+	}
+	ans=(sum+(temp->age))/n;
+	cout<<"\n\n The average age is: "<<(sum+(temp->age))/n<<endl;
+	system("pause>nul");
+	return;
+	
+}
+
 
 
 int main()
@@ -499,6 +535,11 @@ int main()
 		
 		case 4:median_age(head);
 		break;
+		
+		case 5:average_age(head);
+		break;
+		
+		
 		case 0: exit(0);
 		
 	}
