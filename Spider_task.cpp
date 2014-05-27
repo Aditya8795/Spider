@@ -54,10 +54,11 @@ void display(node *(*head))
 	temp=*(head);
 	int counter=1;
 	
+	cout<<"DISPLAY OF linked list!! \n\nLinked List is now:--\n";
+	
 	//traverse along the linked list
 	if(temp!=NULL)
 	{
-		cout<<"	Linked List is now:--\n";
 	
 	    while(temp->next!=NULL){
 	    	
@@ -113,6 +114,7 @@ node* search(char *username, node *localhead)
 	system("CLS");
 	node *temp;
 	temp=localhead;
+	/*
 	//NOW I AM PASSING THE POINTER TO GUY BEFORE THE USER TO BE DELETED, UNLESS THE USER IS POINTED TO BE HEAD THEN ITS THE USER ITSEF- this is crazy!!
 	//check if list is empty
 	if(temp!=NULL)
@@ -149,21 +151,24 @@ node* search(char *username, node *localhead)
 	cout<<"\n\nNo entry with such a name was found, please check your spelling\n";
 	system("pause>nul");
 	return(NULL);
-	/*ORIGINAL METHOD TO FIND THE USER TO BE DELETED, above i will try to get the guy before the user
+	*/
+	
+	//ORIGINAL METHOD TO FIND - THE USER TO BE DELETED, above i will try to get the guy before the user (code above)
+	
 	//check if list is empty
 	if(temp!=NULL)
 	{
 		
-		do
+	    while(temp->next!=NULL)
 		{
-			if((strcmp(temp->name,username)==0))
+			if((strcmpi(temp->name,username)==0))
 			{
 				//when found send the pointer to the user to the del_user()
 				return(temp);
 			}
 			//move along the list
 			temp=temp->next;
-		}while(temp->next!=NULL);
+		}
 		
 		//the last guy is pointing to NULL, just in case this user is at the end..
 		if((strcmp(temp->name,username)==0))
@@ -183,7 +188,7 @@ node* search(char *username, node *localhead)
 	cout<<"\n\nNo entry with such a name was found, please check your spelling\n";
 	system("pause>nul");
 	return(NULL);
-	*/
+	
 	
 }
 //- a mutator, changes the original list
@@ -205,6 +210,7 @@ void add_user(node **head){
 		cout<<"Enter the new user's age : ";
 		cin>>(*head)->age;
 		/* Tried a lot of stuff.. cant seem to easily make sure user enters only intergers
+		//basically make the cin IDIOT PROOF
 		if(!isdigit(temp1)){
 			localhead->age=temp1;
 			cout<<"done";
@@ -312,20 +318,62 @@ void sort_users(node **head){
 void del_user(node *user)
 {
 	node *temp;
-
-	system("CLS");
+	char name[20];
+	
+    system("CLS");
 		
 	if(user==NULL)
 	{
 		//this means either empty list OR no such user found
 		return;
 	}
+	else
+	{
+		//THE one case when you have to delete the LAST element in the list
+		if(user->next==NULL)
+		{
+			cout<<"\n\n look if the list only has one element and we want to delete it \n then its a special case when we need to set the HEAD pointer to point to NULL, \n so without HEAD pointer i cant delete the one element the list ";
+			cout<<"\n\n if its the last element you want to delete, then we can get a handle on the \n preceeding node in order to set it as NULL \n";
+            //" the head or the previous node has "&user" stored in ITS next attribute!i cant access it!!
+            delete user;
+			system("pause>nul");
+			//BUT I AM TELLING YOU GUYS!, look if the list only has one element and we want to delete it
+			//then its a special case when we need to set the HEAD pointer to point to NULL, 
+			//so without HEAD pointer i cant delete the one element the list
+			return;
+			// in the case when the list has more than one element when i swap the elements, head points to the location of the "to be deleted node"
+			//but i put in the values in that address virtually making head point to the node after the one that is to be deleted
+		}
+			
+		//find the name and keep it safe
+		strcpy(name,user->name);
+  	    temp=user;
+  	    
+	    //stop traversing at the second to last node,  cause we need to set it's next to NULL
+	    while((temp->next)->next!=NULL)
+	    {
+	    	swap(temp,temp->next);
+	    	cout<<"\n swapped \n";
+            system("pause>nul");
+		    //temp to follow the user and stop at the second last node
+		    temp=temp->next;
+	    	
+	    }
+
+	    //now we let the user to be deleted swap to the end of the list
+	    swap(temp,temp->next);
 	
-	temp=user;
+	    //free the memory associated with the user
+	    delete (temp->next);
 	
+	    //set the end of the list at the node where temp is pointing
+	    temp->next=NULL;
 	
-	cout<<"\n\n"<<(user)->name<<" has been deleted \n";
-	system("pause>nul");
+	    cout<<"\n\n"<<name<<" has been deleted \n";
+	    system("pause>nul");
+		
+	}
+	
 }
 
 
