@@ -10,12 +10,11 @@
 using namespace std;
 
 
-
-
 class node
 {
 	public:
-	   //the user data
+	
+       //the user data
        char name[20];
        int age;
        char occupation[20];
@@ -24,14 +23,9 @@ class node
        
        node *next; //pointer to the address of the next node
        
-       
 };
          
-              
-             
-             
-               
-		   
+/*
 		   
 		void add_user(node *head);
 		void sort_users(node *head);
@@ -44,7 +38,7 @@ class node
 		void segregate_age(node *head);
 		void reverse(node *head);
 		
-		
+*/		
 	
 void display(node *(*head))
 {
@@ -62,12 +56,12 @@ void display(node *(*head))
 	
 	    while(temp->next!=NULL)
 	    {
-	    	cout<<"Name No "<<counter<<":-"<<temp->name<<"\n";
+	    	cout<<"Name No "<<counter<<":- "<<temp->name<<"  Age :- "<<temp->age<<endl;
 	        temp=temp->next;
 		counter++; // keeps track of the nth node (the no)
 	    }
 	    
-	cout<<"Name No "<<counter<<":-"<<temp->name<<endl;
+	cout<<"Name No "<<counter<<":- "<<temp->name<<"  Age :- "<<temp->age<<endl;
 	
 	}
 	else
@@ -192,6 +186,28 @@ node* search(char *username, node *localhead)
 	
 }
 
+void sort(int a[100], int array_size)
+{
+
+	int i, j, temp;
+    for (i = 0; i < (array_size - 1); ++i)
+    {
+      for (j = 0; j < array_size - 1 - i; ++j )
+      {
+           if (a[j] > a[j+1])
+           {
+                temp = a[j+1];
+                a[j+1] = a[j];
+                a[j] = temp;
+           }
+      }
+    }
+	
+	
+}
+
+//==================================================================
+// the 10 functions
 
 //- a mutator, changes the original list
 void add_user(node **head)
@@ -384,6 +400,68 @@ void del_user(node *user)
 	
 }
 
+//to find the median age of the users in the linked list
+void median_age(node *head)
+{
+	system("CLS");
+	
+	int i=1,n=1,median;
+	if(head==NULL)
+	{
+		cout<<"\n\n The list is empty, NO median exists"<<endl;
+		system("pause>nul");
+		return;
+		
+	}
+	if(head->next==NULL)
+	{
+		cout<<"\n\n The list has only one element, the median is: "<<head->age<<endl;
+		system("pause>nul");
+		return;
+	}
+	// using selection algorithm, we can linearly find (O(N), where n is length) the median without sorting the array
+	node *temp;
+	
+	temp=head;
+	int a[100],b;
+	float ans;
+
+	//to find the number of nodes, n and to form the array a, which holds all the ages
+	while(temp->next!=NULL)
+	{
+		a[n-1]=temp->age;
+		n++;
+		temp=temp->next;
+		
+	}
+	// store the last node's age
+	a[n-1]=temp->age;
+	
+	sort(a,n);
+	
+	if(n==2)
+	{
+		ans=(a[0]+a[1])/2;
+		cout<<"\n\n for the 2 element list, The median is "<<ans<<endl;
+		system("pause>nul");
+		return;
+    }
+	
+	if(n%2==0)
+	{
+		b=(n/2)-1;
+		ans=(a[b]+a[b+1])/2;
+		cout<<"\n\n The median is "<<ans<<endl;
+	}
+	else
+	{
+		cout<<"\n\n The median is "<<a[(n/2)]<<endl;
+	}
+	
+	system("pause>nul");
+}
+
+
 
 int main()
 {
@@ -419,6 +497,8 @@ int main()
 		del_user(search(name_user,head));
 		break;
 		
+		case 4:median_age(head);
+		break;
 		case 0: exit(0);
 		
 	}
@@ -431,3 +511,4 @@ int main()
 
 
        
+
