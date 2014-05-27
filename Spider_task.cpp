@@ -35,7 +35,7 @@ class node
 		   
 		void add_user(node *head);
 		void sort_users(node *head);
-	    void del_user(node *user);
+	        void del_user(node *user);
 		float median_age(node *head);
 		float average_age(node *head);
 		char* max_occupation(node *head);
@@ -60,11 +60,11 @@ void display(node *(*head))
 	if(temp!=NULL)
 	{
 	
-	    while(temp->next!=NULL){
-	    	
-		    cout<<"Name No "<<counter<<":-"<<temp->name<<"\n";
-		    temp=temp->next;
-		    counter++; // keeps track of the nth node (the no)
+	    while(temp->next!=NULL)
+	    {
+	    	cout<<"Name No "<<counter<<":-"<<temp->name<<"\n";
+	        temp=temp->next;
+		counter++; // keeps track of the nth node (the no)
 	    }
 	    
 	cout<<"Name No "<<counter<<":-"<<temp->name<<endl;
@@ -191,14 +191,18 @@ node* search(char *username, node *localhead)
 	
 	
 }
+
+
 //- a mutator, changes the original list
-void add_user(node **head){
+void add_user(node **head)
+{
 	system("CLS");
 	
 	//this a temporary node pointer
 	node *temp;
 	
-	if(*head==NULL){
+	if(*head==NULL)
+	{
 		//now as head was pointing to NULL, we make it point to a new node(the HEAD NODE)
 		*head=new node;
 		//and this new node is set to point to NULL as the list only has this one node right now
@@ -231,12 +235,15 @@ void add_user(node **head){
 		cout<<"Enter the new user's gender (M/F) : ";
 		cin>>(*head)->gender;
 	}
-	else{
+	else
+	{
+		
 		//as the list HAS a head node, we set temp to point to the HEAD node
 		temp=*head;
 		
 		//and we use temp to jump along all the linked nodes to the last node in the list
-		while(temp->next!=NULL){
+		while(temp->next!=NULL)
+		{
 			temp=temp->next;
 		}
 		
@@ -266,7 +273,8 @@ void add_user(node **head){
 }
 
 //I am going to implement BUBBLE SORT - a mutator, changes the original list
-void sort_users(node **head){
+void sort_users(node **head)
+{
 	system("CLS");
 		
 	int swapped;
@@ -334,8 +342,8 @@ void del_user(node *user)
 		{
 			cout<<"\n\n look if the list only has one element and we want to delete it \n then its a special case when we need to set the HEAD pointer to point to NULL, \n so without HEAD pointer i cant delete the one element the list ";
 			cout<<"\n\n if its the last element you want to delete, then we can get a handle on the \n preceeding node in order to set it as NULL \n";
-            //" the head or the previous node has "&user" stored in ITS next attribute!i cant access it!!
-            delete user;
+                        //" the head or the previous node has "&user" stored in ITS next attribute!i cant access it!!
+      
 			system("pause>nul");
 			//BUT I AM TELLING YOU GUYS!, look if the list only has one element and we want to delete it
 			//then its a special case when we need to set the HEAD pointer to point to NULL, 
@@ -345,8 +353,8 @@ void del_user(node *user)
 			//but i put in the values in that address virtually making head point to the node after the one that is to be deleted
 		}
 			
-		//find the name and keep it safe
-		strcpy(name,user->name);
+            //find the name and keep it safe
+            strcpy(name,user->name);
   	    temp=user;
   	    
 	    //stop traversing at the second to last node,  cause we need to set it's next to NULL
@@ -354,9 +362,9 @@ void del_user(node *user)
 	    {
 	    	swap(temp,temp->next);
 	    	cout<<"\n swapped \n";
-            system("pause>nul");
-		    //temp to follow the user and stop at the second last node
-		    temp=temp->next;
+                system("pause>nul");
+		//temp to follow the user and stop at the second last node
+		temp=temp->next;
 	    	
 	    }
 
@@ -377,12 +385,14 @@ void del_user(node *user)
 }
 
 
-int main(){
+int main()
+{
 	
 	int choice=0;
 	class node *head = NULL; //THE head (node pointer) is intialized and made to point to NULL
 	char name_user[20];
-	while(1){
+	while(1)
+	{
 		
 	
 	cout<<"\n\n\n\n            WELCOME TO THE USER DATA MANAGEMENT MENU";
@@ -394,7 +404,8 @@ int main(){
 	cout<<"      enter the number corresponding to the choice to proceed \n";
 	cin>>choice;
 	
-	switch(choice){
+	switch(choice)
+	{
 		
 		case 1:add_user(&head);
 		break;
