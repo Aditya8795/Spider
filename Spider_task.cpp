@@ -25,21 +25,9 @@ class node
        
 };
          
-/*
-		   
-		void add_user(node *head);
-		void sort_users(node *head);
-	    void del_user(node *user);
-		float median_age(node *head);
-		float average_age(node *head);
-		char* max_occupation(node *head);
-		char* max_location(node *head);
-		void suggest_friends(node *head,char *name);
-		void segregate_age(node *head);
-		void reverse(node *head);
-		
-*/		
-	
+        
+// Functions which enable the 10 main functions to work
+         
 //displays the state of the linked list after every operation
 void display(node *(*head))
 {
@@ -49,7 +37,7 @@ void display(node *(*head))
 	temp=*(head);
 	int counter=1;
 	
-	cout<<"DISPLAY OF linked list!! \n\nLinked List is now:--\n";
+	cout<<"   \n\n\n  DISPLAY OF linked list!! \n\n\n          Linked List is now:--\n";
 	
 	//traverse along the linked list
 	if(temp!=NULL)
@@ -68,7 +56,7 @@ void display(node *(*head))
 	else
 	{
 		//if the List is Empty
-		cout<<"\n\nNothing to display - As list is Empty\n";
+		cout<<"\n\n\n\n          Nothing to display - As list is Empty\n";
 	}
 	
 	system("pause>nul");
@@ -210,13 +198,56 @@ void sort(int a[100], int array_size)
 	
 }
 
+//copies the node2 values into node1
+void copy(node *node1, node *node2)
+{
+	//copy individual data attributes
+	strcpy(node1->name, node2->name);
+	
+	node1->age=node2->age;
+	
+	strcpy(node1->occupation,node2->occupation);
+
+	strcpy(node1->location,node2->location);
+
+	node1->gender=node2->gender;
+	//copied!
+}
+
+
+void del_user(node *user, node **head); //Used inside insert function.. as its defined after this.. i have its prototype here
+
 //it takes (the pointer to the node which is to be inserted) and (the pointer to the node after which it has to be inserted) and the address of the head node pointer
-//as this function is a mutator
-void insert(node **head, node *user, node *after)
+//as this function is a mutator and it returns a pointer to the node just inserted
+node* insert(node **head, node *user, node *after)
 {
 	node *temp;
 	temp=*head;
-	
+	node *temp1;
+	node *temp3;
+	//incase the after is NULL it means the user has to be inserted at the beginning
+	if(after==NULL)
+	{
+		*head=new node;
+		copy(*head,user);
+		del_user(user,head);
+		(*head)->next=temp;
+		return temp;
+	}
+	while(temp->next!=NULL)
+	{
+		if(temp==after)
+		{
+			temp1=temp->next;
+			temp3=new node;
+			copy(temp3,user);
+			del_user(user,head);
+			temp->next=temp3;
+			temp3->next=temp1;
+			return temp3;
+			
+		}
+	}
 }
 
 //==================================================================
@@ -353,9 +384,12 @@ void sort_users(node **head)
 }
 
 //- a mutator, changes the original list
-void del_user(node *user)
+void del_user(node *user, node **head)
 {
+	//if there are multiple occurences of the same name, then the user closest to the last is deleted, we can write some statements to promt more information
+	//temp is used to traverse the list
 	node *temp;
+	//stores the user's (who is to be deleted) name to display the completion of said task
 	char name[20];
 	
     system("CLS");
@@ -370,6 +404,41 @@ void del_user(node *user)
 		//THE one case when you have to delete the LAST element in the list
 		if(user->next==NULL)
 		{
+			//using Head pointer
+			temp=*head;
+			//if its the LAST as well as the first node
+			if(user==*head)
+			{
+				// then all we need to do is set the head to point to NULL, first we delete the node that head and user points to
+				delete head; //or delete user;  will also work
+				
+				//we need the name to be safe..
+				strcpy(name,(*head)->name);
+				// now to let the rest of the functions know the list is empty and 
+				// so that the junk value that is now at the place head was pointing to (&head that was passed as argument) i never used by other functions
+				// we set the head pointer to point to null, ie it now stores all zero bits and address zero is deliberately not mapped in into your address space
+				// so memory management unit (MMU) wont crah when its accessed..
+				*head=NULL;
+				cout<<"\n\n"<<name<<" has been deleted \n";
+	            system("pause>nul");
+				return;
+			}
+			// in case its not the first AND last node, we find the node before it.. ie the second last node
+			while((temp->next)->next!=NULL)
+			{
+				temp=temp->next;
+			}
+			// now temp is a handle to the second last node we make IT point to NULL as now ITs the last node
+			temp->next=NULL;
+			// get the name
+			strcpy(name,(user)->name);
+			// delete the last node
+			delete user;
+			cout<<"\n\n"<<name<<" has been deleted \n";
+	        system("pause>nul");
+			return;
+			
+			/*
 			cout<<"\n\n look if the list only has one element and we want to delete it \n then its a special case when we need to set the HEAD pointer to point to NULL, \n so without HEAD pointer i cant delete the one element the list ";
 			cout<<"\n\n if its the last element you want to delete, then we can get a handle on the \n preceeding node in order to set it as NULL \n";
 			//" the head or the previous node has "&user" stored in ITS next attribute!i cant access it!!
@@ -380,6 +449,7 @@ void del_user(node *user)
 			return;
 			// in the case when the list has more than one element when i swap the elements, head points to the location of the "to be deleted node"
 			//but i put in the values in that address virtually making head point to the node after the one that is to be deleted
+		    */
 		}
 			
         //find the name and keep it safe
@@ -390,8 +460,6 @@ void del_user(node *user)
 	    while((temp->next)->next!=NULL)
 	    {
 	    	swap(temp,temp->next);
-	    	cout<<"\n swapped \n";
-            system("pause>nul");
 		    //temp to follow the user and stop at the second last node
 		    temp=temp->next;
 	    	
@@ -742,6 +810,53 @@ void suggest_friends(node *head)
 	return;
 }
 
+void segregate_age(node **head)
+{
+	system("CLS");
+	node *temp;
+	temp=*head;
+	node *temp1;
+	
+	//check if its a Empty List
+	if(*head==NULL)
+	{
+		cout<<"\n\n\n This is a Empty List, Nothing to Segregate by Age.\n\n";
+		system("pause>nul");
+		return;
+	}
+	//check if its a list with 1 element
+	if(temp->next==NULL)
+	{
+		cout<<"\n\n\n This is a List with only a single user, Cant Segregate by Age\n\n";
+		system("pause>nul");
+		return;
+	}
+	while(temp->next!=NULL)
+	{
+		cout<<"\n list has more than 1 element \n";
+		if((temp->age%2)!=0)
+		{
+			cout<<"\n this number is odd \n";
+			if(temp==*head)
+			{
+				cout<<"the first number is odd so ignore..";
+				temp1=temp;
+				temp=temp->next;
+				continue;
+		    }
+		    temp1=insert(head,temp,temp1);
+		}
+		cout<<"\n finished a user now \n";
+		temp=temp->next;
+	}
+	if((temp->age%2)!=0)
+	{
+		cout<<"\n this is the last element\n";
+		temp1=insert(head,temp,temp1);
+	}
+}
+
+// the driver function for implementing the 10 Functions in a menu form
 int main()
 {
 	
@@ -773,7 +888,7 @@ int main()
 		case 3:system("CLS");
 		cout<<"\n Enter the name of the user who you want to delete\n";
 		cin>>name_user;
-		del_user(search(name_user,head));
+		del_user(search(name_user,head),&head);
 		break;
 		
 		case 4:median_age(head);
@@ -791,13 +906,18 @@ int main()
 		case 8:suggest_friends(head);
 		break;
 		
+		case 9:segregate_age(&head);
+		break;
+		
 		case 0: exit(0);
 		
 	}
 	
 	display(&head);
+	system("CLS");
     } //while loop to infinity
-    
+    cout<<"\ncheck\n";
+    system("pause>nul");
 	return 0;
 }
 
