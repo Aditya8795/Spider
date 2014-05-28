@@ -29,7 +29,7 @@ class node
 		   
 		void add_user(node *head);
 		void sort_users(node *head);
-	        void del_user(node *user);
+	    void del_user(node *user);
 		float median_age(node *head);
 		float average_age(node *head);
 		char* max_occupation(node *head);
@@ -57,12 +57,12 @@ void display(node *(*head))
 	
 	    while(temp->next!=NULL)
 	    {
-	    	cout<<"Name No "<<counter<<":- "<<temp->name<<"  Age :- "<<temp->age<<endl;
+	    	cout<<"Name No "<<counter<<":- "<<temp->name<<"  Age :- "<<temp->age<<"  Occupation :- "<<temp->occupation<<"  Location :- "<<temp->location<<"  Gender :- "<<temp->gender<<endl;
 	        temp=temp->next;
-		counter++; // keeps track of the nth node (the no)
+		    counter++; // keeps track of the nth node (the no)
 	    }
 	    
-	cout<<"Name No "<<counter<<":- "<<temp->name<<"  Age :- "<<temp->age<<endl;
+	cout<<"Name No "<<counter<<":- "<<temp->name<<"  Age :- "<<temp->age<<"  Occupation :- "<<temp->occupation<<"  Location :- "<<temp->location<<"  Gender :- "<<temp->gender<<endl;
 	
 	}
 	else
@@ -191,6 +191,7 @@ node* search(char *username, node *localhead)
 //in order to find median, this sorts the ages
 void sort(int a[100], int array_size)
 {
+	//this implements bubble sort to sort the integer array being passed
 
 	int i, j, temp;
     for (i = 0; i < (array_size - 1); ++i)
@@ -206,6 +207,15 @@ void sort(int a[100], int array_size)
       }
     }
 	
+	
+}
+
+//it takes (the pointer to the node which is to be inserted) and (the pointer to the node after which it has to be inserted) and the address of the head node pointer
+//as this function is a mutator
+void insert(node **head, node *user, node *after)
+{
+	node *temp;
+	temp=*head;
 	
 }
 
@@ -362,8 +372,7 @@ void del_user(node *user)
 		{
 			cout<<"\n\n look if the list only has one element and we want to delete it \n then its a special case when we need to set the HEAD pointer to point to NULL, \n so without HEAD pointer i cant delete the one element the list ";
 			cout<<"\n\n if its the last element you want to delete, then we can get a handle on the \n preceeding node in order to set it as NULL \n";
-                        //" the head or the previous node has "&user" stored in ITS next attribute!i cant access it!!
-      
+			//" the head or the previous node has "&user" stored in ITS next attribute!i cant access it!!
 			system("pause>nul");
 			//BUT I AM TELLING YOU GUYS!, look if the list only has one element and we want to delete it
 			//then its a special case when we need to set the HEAD pointer to point to NULL, 
@@ -373,8 +382,8 @@ void del_user(node *user)
 			//but i put in the values in that address virtually making head point to the node after the one that is to be deleted
 		}
 			
-            //find the name and keep it safe
-            strcpy(name,user->name);
+        //find the name and keep it safe
+        strcpy(name,user->name);
   	    temp=user;
   	    
 	    //stop traversing at the second to last node,  cause we need to set it's next to NULL
@@ -382,9 +391,9 @@ void del_user(node *user)
 	    {
 	    	swap(temp,temp->next);
 	    	cout<<"\n swapped \n";
-                system("pause>nul");
-		//temp to follow the user and stop at the second last node
-		temp=temp->next;
+            system("pause>nul");
+		    //temp to follow the user and stop at the second last node
+		    temp=temp->next;
 	    	
 	    }
 
@@ -408,8 +417,10 @@ void del_user(node *user)
 void median_age(node *head)
 {
 	system("CLS");
+	//n is used to store no of nodes
+	int n=1;
 	
-	int i=1,n=1,median;
+	//checks if the list is empty
 	if(head==NULL)
 	{
 		cout<<"\n\n The list is empty, NO median exists"<<endl;
@@ -417,22 +428,25 @@ void median_age(node *head)
 		return;
 		
 	}
+	//checks if the list has only one element
 	if(head->next==NULL)
 	{
 		cout<<"\n\n The list has only one element, the median is: "<<head->age<<endl;
 		system("pause>nul");
 		return;
 	}
-	// using selection algorithm, we can linearly find (O(N), where n is length) the median without sorting the array
-	node *temp;
 	
+	node *temp;
 	temp=head;
+	// a holds all the ages of the users in a integer array, b is used for median calculation
 	int a[100],b;
-	float ans;
+	//median is used to store the answer
+	float median;
 
 	//to find the number of nodes, n and to form the array a, which holds all the ages
 	while(temp->next!=NULL)
 	{
+		//traverse through the list storing each users age into the integer array for manipulation
 		a[n-1]=temp->age;
 		n++;
 		temp=temp->next;
@@ -441,21 +455,23 @@ void median_age(node *head)
 	// store the last node's age
 	a[n-1]=temp->age;
 	
+	// make the ages in order, this is a mutator function
 	sort(a,n);
 	
+	//print the median in case of a 2 element list
 	if(n==2)
 	{
-		ans=(a[0]+a[1])/2;
-		cout<<"\n\n for the 2 element list, The median is "<<ans<<endl;
+		median=(a[0]+a[1])/2;
+		cout<<"\n\n for the 2 element list, The median is "<<median<<endl;
 		system("pause>nul");
 		return;
     }
-	
+	//in case of 2n or 2n+1 no of users, after sorting the ages, the median varies.. that is calculated
 	if(n%2==0)
 	{
 		b=(n/2)-1;
-		ans=(a[b]+a[b+1])/2;
-		cout<<"\n\n The median is "<<ans<<endl;
+		median=(a[b]+a[b+1])/2;
+		cout<<"\n\n The median is "<<median<<endl;
 	}
 	else
 	{
@@ -465,12 +481,16 @@ void median_age(node *head)
 	system("pause>nul");
 }
 
+//find the average of the ages of all users
 void average_age(node *head)
 {
 	system("CLS");
-	float sum=0,n=1,ans;
+	//sum/n is average, ie sum is the total sum of all ages and n is the number of such ages
+	float sum=0,n=1,average;
 	node *temp;
 	temp=head;
+	
+	//in case of empty list
 	if(head==NULL)
 	{
 		cout<<"\n\n The list is empty, NO Average exists"<<endl;
@@ -478,26 +498,249 @@ void average_age(node *head)
 		return;
 		
 	}
+	
+	//in case os only a single element in the list
 	if(head->next==NULL)
 	{
 		cout<<"\n\n The list has only one element, the average age is: "<<head->age<<endl;
 		system("pause>nul");
 		return;
 	}
+	
+	//find the number of nodes and find the sum of all ages
 	while(temp->next!=NULL)
 	{
+		//traverse along the linked list, adding each age to sum
 		sum=sum+(temp->age);
 		temp=temp->next;
 		n++;
 	}
-	ans=(sum+(temp->age))/n;
-	cout<<"\n\n The average age is: "<<(sum+(temp->age))/n<<endl;
+	//calculate average and print
+	average=(sum+(temp->age))/n;
+	cout<<"\n\n The average age is: "<<average<<endl;
 	system("pause>nul");
 	return;
 	
 }
 
+//find the most common occupation among the users
+void max_occupation(node *head)
+{
+	system("CLS");
+	
+	node *temp1;
+	node *temp2;
+	node *ans;
+	temp1=head;
+	temp2=head;
+	char maybe[20];
+	int counter=0,lastcounter=0;
+	
+	if(head==NULL)
+	{
+		cout<<"\n\n The list is empty!!"<<endl;
+		system("pause>nul");
+		return;
+		
+	}
+	//in case os only a single element in the list
+	if(head->next==NULL)
+	{
+		cout<<"\n\n The list has only one element, and so the most common occupation is: "<<head->occupation<<endl;
+		system("pause>nul");
+		return;
+	}
 
+	while(temp1->next!=NULL)
+	{
+
+		strcpy(maybe,temp1->occupation);
+		
+		while(temp2->next!=NULL)
+		{
+			if(strcmp(maybe,temp2->occupation)==0)
+			{
+				counter++;
+			}	
+			temp2=temp2->next;
+		}
+		
+		if(counter>lastcounter)
+		{
+			ans=temp1;
+			lastcounter=counter;
+		}
+		
+		temp2=head;
+
+		temp1=temp1->next;
+	}
+	
+	cout<<"\n\n In the list the most common occupation is: "<<ans->occupation<<endl;
+	system("pause>nul");
+	return;
+	
+}
+
+//find the most common occupation among the users
+void max_location(node *head)
+{
+	system("CLS");
+	// we do this by taking 2 temporary pointers, both traverse the list in a double loop
+	// 
+	node *temp1;
+	node *temp2;
+	node *ans;
+	temp1=head;
+	temp2=head;
+	char maybe[20];
+	int counter=0,lastcounter=0;
+	
+	if(head==NULL)
+	{
+		cout<<"\n\n The list is empty!!"<<endl;
+		system("pause>nul");
+		return;
+		
+	}
+	//in case os only a single element in the list
+	if(head->next==NULL)
+	{
+		cout<<"\n\n The list has only one element, and so the most common location is: "<<head->location<<endl;
+		system("pause>nul");
+		return;
+	}
+
+	while(temp1->next!=NULL)
+	{
+
+		strcpy(maybe,temp1->location);
+		
+		while(temp2->next!=NULL)
+		{
+			if(strcmp(maybe,temp2->location)==0)
+			{
+				counter++;
+			}	
+			temp2=temp2->next;
+		}
+		
+		if(counter>lastcounter)
+		{
+			ans=temp1;
+			lastcounter=counter;
+		}
+		
+		temp2=head;
+
+		temp1=temp1->next;
+	}
+	
+	cout<<"\n\n In the list the most common location is: "<<ans->location<<endl;
+	system("pause>nul");
+	return;
+	
+}
+
+void suggest_friends(node *head)
+{
+	system("CLS");
+	
+	node *temp;
+	node *lonely;
+	temp=head;
+	char user[20];
+	int found=0;
+	
+	if(head==NULL)
+	{
+		cout<<"\n\n The list is empty!!"<<endl;
+		system("pause>nul");
+		return;
+		
+	}
+	
+	cout<<"\n\n Enter the user you want to find friends for \n";
+	cin>>user;
+	
+	//in case os only a single element in the list
+	if(head->next==NULL)
+	{
+		cout<<"\n\n The list has only one element, and so there is no friends we can suggest: "<<endl;
+		system("pause>nul");
+		return;
+	}
+	
+	lonely=search(user,head);
+	
+	if(lonely==NULL)
+	{
+		return;
+	}
+	
+	while(temp->next!=NULL)
+	{
+		if(temp==lonely)
+		{
+			temp=temp->next;
+			continue;
+		}
+		if(strcmp(lonely->location,temp->location)==0 || strcmp(lonely->occupation,temp->occupation)==0 )
+		{
+			if((lonely->age)>=(temp->age))
+			{
+				if((lonely->age)-(temp->age)<15)
+				{
+					cout<<temp->name<<"\n Could be your friend!!"<<endl;
+		            system("pause>nul");
+		            found=1;
+				}
+			}
+			else
+			{
+				if(((temp->age)-(lonely->age))<15)
+				{
+					cout<<temp->name<<"\n Could be your friend!!"<<endl;
+		            system("pause>nul");
+		            found=1;
+				}
+				
+			}
+		}
+		
+		temp=temp->next;
+	}
+
+    if((strcmp(lonely->location,temp->location)==0 || strcmp(lonely->occupation,temp->occupation)==0)&& temp!=lonely)
+    {
+		if((lonely->age)>=(temp->age))
+		{
+			if((lonely->age)-(temp->age)<15)
+			{
+					cout<<temp->name<<"\n Could be your friend!!"<<endl;
+		            system("pause>nul");
+		            found=1;
+			}
+		}
+		else
+		{
+			if(((temp->age)-(lonely->age))<15)
+			{
+					cout<<temp->name<<"\n Could be your friend!!"<<endl;
+		            system("pause>nul");
+		            found=1;
+			}
+				
+		}
+	
+	}
+	if(found==0)
+	{
+			cout<<"No friends could be Found!! :(";
+			system("pause>nul");
+	}
+	return;
+}
 
 int main()
 {
@@ -539,6 +782,14 @@ int main()
 		case 5:average_age(head);
 		break;
 		
+		case 6:max_occupation(head);
+		break;
+		
+		case 7:max_location(head);
+		break;
+		
+		case 8:suggest_friends(head);
+		break;
 		
 		case 0: exit(0);
 		
