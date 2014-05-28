@@ -45,12 +45,12 @@ void display(node *(*head))
 	
 	    while(temp->next!=NULL)
 	    {
-	    	cout<<"Name No "<<counter<<":- "<<temp->name<<"  Age :- "<<temp->age<<"  Occupation :- "<<temp->occupation<<"  Location :- "<<temp->location<<"  Gender :- "<<temp->gender<<endl;
+	    	cout<<"Name No "<<counter<<":- "<<temp->name<<"  Age :- "<<temp->age<<"  Occupation :- "<<temp->occupation<<"  Location :- "<<temp->location<<endl;
 	        temp=temp->next;
 		    counter++; // keeps track of the nth node (the no)
 	    }
 	    
-	cout<<"Name No "<<counter<<":- "<<temp->name<<"  Age :- "<<temp->age<<"  Occupation :- "<<temp->occupation<<"  Location :- "<<temp->location<<"  Gender :- "<<temp->gender<<endl;
+	cout<<"Name No "<<counter<<":- "<<temp->name<<"  Age :- "<<temp->age<<"  Occupation :- "<<temp->occupation<<"  Location :- "<<temp->location<<endl;
 	
 	}
 	else
@@ -221,30 +221,53 @@ void del_user(node *user, node **head); //Used inside insert function.. as its d
 //as this function is a mutator and it returns a pointer to the node just inserted
 node* insert(node **head, node *user, node *after)
 {
+	// now the idea is to have temp traverse along the list, 
 	node *temp;
+	//temp points to the current first node..
 	temp=*head;
-	node *temp1;
-	node *temp3;
+	node *before;
+	node *inserted;
 	//incase the after is NULL it means the user has to be inserted at the beginning
 	if(after==NULL)
 	{
-		*head=new node;
+		//after points to the node after which you should insert the user node
+		//to solve the dilemma when the node has to be inserted at the beginning, 
+		//we pass NULL as the indicator that the point where the insertion has to take place is at the start
+		//this is only for the case the first node IS NOT  a having a odd age
+		
+	    //we create a new node, empty.. 
+		//and head points to it now..
+		(*head)=new node;
+		//we then fill it with user's values
 		copy(*head,user);
+		//delete the original user
 		del_user(user,head);
+		//get this new node's pointer to point to the old first node (ie temp)
 		(*head)->next=temp;
-		return temp;
+		//now return the pointer to the newly inserted node!
+		return (*head);
 	}
+	//for other cases.. move along the list
 	while(temp->next!=NULL)
 	{
+		//if we encounter the position where user is to be inserted, ie the pointer after
 		if(temp==after)
 		{
-			temp1=temp->next;
-			temp3=new node;
-			copy(temp3,user);
+			//now there are 2 nodes, the NODE 'after' is pointing to, and the one after THAT node
+			//set 'before' to point to that node (the one after THAT node).
+			before=after->next;
+			//allocated the memory for the node that is going to be inserted
+			inserted=new node;
+			//get the values of the node user and copy them into the node we just made(which inserted points to)
+			copy(inserted,user);
+			//delete the user node
 			del_user(user,head);
-			temp->next=temp3;
-			temp3->next=temp1;
-			return temp3;
+			//to set the linked list properly, let the 'after' node point to the inerted node
+			after->next=inserted;
+			//and the inerted node point to the 'before' node
+			inserted->next=before;
+			// return the pointer to the node we just inserted
+			return inserted;
 			
 		}
 	}
@@ -406,7 +429,7 @@ void del_user(node *user, node **head)
 		{
 			//using Head pointer
 			temp=*head;
-			//if its the LAST as well as the first node
+			//if its the LAST AS WELL AS THE FIRST NODE
 			if(user==*head)
 			{
 				// then all we need to do is set the head to point to NULL, first we delete the node that head and user points to
@@ -419,8 +442,6 @@ void del_user(node *user, node **head)
 				// we set the head pointer to point to null, ie it now stores all zero bits and address zero is deliberately not mapped in into your address space
 				// so memory management unit (MMU) wont crah when its accessed..
 				*head=NULL;
-				cout<<"\n\n"<<name<<" has been deleted \n";
-	            system("pause>nul");
 				return;
 			}
 			// in case its not the first AND last node, we find the node before it.. ie the second last node
@@ -455,7 +476,6 @@ void del_user(node *user, node **head)
         //find the name and keep it safe
         strcpy(name,user->name);
   	    temp=user;
-  	    
 	    //stop traversing at the second to last node,  cause we need to set it's next to NULL
 	    while((temp->next)->next!=NULL)
 	    {
@@ -815,8 +835,9 @@ void segregate_age(node **head)
 	system("CLS");
 	node *temp;
 	temp=*head;
-	node *temp1;
-	
+	node *lastodd;
+	//as far we know now even the first element is even, if not then in the loop the lastodd will be reset
+	lastodd=NULL;
 	//check if its a Empty List
 	if(*head==NULL)
 	{
@@ -831,29 +852,35 @@ void segregate_age(node **head)
 		system("pause>nul");
 		return;
 	}
+	//only 2 nodes in the list
+	if((temp->next)->next==NULL)
+	{
+		if((temp->age)%2==0 && ((temp->next)->age)%2!=0 )
+		{
+			swap(temp,temp->next);
+		}
+		cout<<"\n\n\n This List has been Segregated by Age\n\n";
+	    system("pause>nul");
+		return;
+	}
+	//here temp traverses the list.. checking for odd aged users
 	while(temp->next!=NULL)
 	{
-		cout<<"\n list has more than 1 element \n";
+		//what happens is they check if the user is odd, if so insert this user at point where the last user's age was odd
 		if((temp->age%2)!=0)
 		{
-			cout<<"\n this number is odd \n";
-			if(temp==*head)
-			{
-				cout<<"the first number is odd so ignore..";
-				temp1=temp;
-				temp=temp->next;
-				continue;
-		    }
-		    temp1=insert(head,temp,temp1);
+		    lastodd=insert(head,temp,lastodd);
 		}
-		cout<<"\n finished a user now \n";
+		// move along the list..
 		temp=temp->next;
 	}
+	// special case if the last element has a odd age, the loop doest run for the last node
 	if((temp->age%2)!=0)
 	{
-		cout<<"\n this is the last element\n";
-		temp1=insert(head,temp,temp1);
+		lastodd=insert(head,temp,lastodd);
 	}
+	cout<<"\n\n\n This List has been Segregated by Age\n\n";
+	system("pause>nul");
 }
 
 // the driver function for implementing the 10 Functions in a menu form
@@ -916,6 +943,7 @@ int main()
 	display(&head);
 	system("CLS");
     } //while loop to infinity
+    
     cout<<"\ncheck\n";
     system("pause>nul");
 	return 0;
