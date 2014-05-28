@@ -11,7 +11,7 @@ using namespace std;
 
 //why i 2 nodes not being segregated?????
 //help!!
-
+//arnold chiari malformation
 
 class node
 {

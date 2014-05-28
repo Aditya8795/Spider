@@ -180,6 +180,7 @@ node* search(char *username, node *localhead)
 void sort(int a[100], int array_size)
 {
 	//this implements bubble sort to sort the integer array being passed
+	//the logic behind bubble sort has been discussed in the sort_age()
 
 	int i, j, temp;
     for (i = 0; i < (array_size - 1); ++i)
@@ -202,6 +203,7 @@ void sort(int a[100], int array_size)
 void copy(node *node1, node *node2)
 {
 	//copy individual data attributes
+	
 	strcpy(node1->name, node2->name);
 	
 	node1->age=node2->age;
@@ -442,6 +444,8 @@ void del_user(node *user, node **head)
 				// we set the head pointer to point to null, ie it now stores all zero bits and address zero is deliberately not mapped in into your address space
 				// so memory management unit (MMU) wont crah when its accessed..
 				*head=NULL;
+				cout<<"\n\n"<<name<<" has been deleted \n";
+	            system("pause>nul");
 				return;
 			}
 			// in case its not the first AND last node, we find the node before it.. ie the second last node
@@ -614,24 +618,26 @@ void average_age(node *head)
 //find the most common occupation among the users
 void max_occupation(node *head)
 {
+	//REFER max_location for the logic, basically copy paste :)
 	system("CLS");
 	
 	node *temp1;
 	node *temp2;
 	node *ans;
+	ans=NULL;
 	temp1=head;
 	temp2=head;
 	char maybe[20];
-	int counter=0,lastcounter=0;
+	int counter=0,lastcounter=1;
 	
 	if(head==NULL)
 	{
-		cout<<"\n\n The list is empty!!"<<endl;
+		cout<<"\n\n The list is empty!!, so there is no most common occupation "<<endl;
 		system("pause>nul");
 		return;
 		
 	}
-	//in case os only a single element in the list
+	//in case there is only a single element in the list
 	if(head->next==NULL)
 	{
 		cout<<"\n\n The list has only one element, and so the most common occupation is: "<<head->occupation<<endl;
@@ -653,6 +659,11 @@ void max_occupation(node *head)
 			temp2=temp2->next;
 		}
 		
+		if(strcmp(maybe,temp2->occupation)==0)
+		{
+			counter++;
+		}	
+		
 		if(counter>lastcounter)
 		{
 			ans=temp1;
@@ -663,7 +674,13 @@ void max_occupation(node *head)
 
 		temp1=temp1->next;
 	}
-	
+	if(ans==NULL)
+	{
+		cout<<"\n\n In the list there is no most common Occupation "<<endl;
+	    system("pause>nul");
+	    return;
+		
+	}
 	cout<<"\n\n In the list the most common occupation is: "<<ans->occupation<<endl;
 	system("pause>nul");
 	return;
@@ -674,62 +691,87 @@ void max_occupation(node *head)
 void max_location(node *head)
 {
 	system("CLS");
-	// we do this by taking 2 temporary pointers, both traverse the list in a double loop
-	// 
+	// we do this by taking 2 temporary pointers, both traverse the list in the form of a nested loop
+	// temp1 points to a word, then temp2 goes around checking how many OTHER nodes exist with the same location
 	node *temp1;
 	node *temp2;
+	//ans is the pointer to the node which has the maximum occuring location, as far as the loop had gone
 	node *ans;
+	ans=NULL;
+	//start both temp's from head
 	temp1=head;
 	temp2=head;
+	//this is the word that temp1 selects to compare with the rest of the list
 	char maybe[20];
-	int counter=0,lastcounter=0;
+	//counter is the current count of the number of times the location being looked into was found
+	// and lastcounter is the (as of now) largest count even held by counter
+	int counter=0,lastcounter=1;
 	
+	//check if list is Empty
 	if(head==NULL)
 	{
-		cout<<"\n\n The list is empty!!"<<endl;
+		cout<<"\n\n The list is empty!!, so there is no most common location "<<endl;
 		system("pause>nul");
 		return;
 		
 	}
-	//in case os only a single element in the list
+	
+	//in case if there is only a single element in the list
 	if(head->next==NULL)
 	{
 		cout<<"\n\n The list has only one element, and so the most common location is: "<<head->location<<endl;
 		system("pause>nul");
 		return;
 	}
-
+	
+    // the traversing begins
 	while(temp1->next!=NULL)
 	{
-
-		strcpy(maybe,temp1->location);
-		
+		//the hopefull contenders for "the most common location" is stored in maybe, using temp1 as a handle
+		strcpy(maybe,temp1->location);	
+		//surveys the whole list looking for all users with the same location	
 		while(temp2->next!=NULL)
 		{
 			if(strcmp(maybe,temp2->location)==0)
 			{
-				counter++;
+				counter++; //increments the counter when such a user is found
 			}	
 			temp2=temp2->next;
 		}
 		
+		//checks in the case of the last element
+		if(strcmp(maybe,temp2->location)==0)
+		{
+			counter++; //increments the counter when such a user is found
+		}	
+		
+		//after every inner loop we check if this "maybe" is our alltime highest.. 
 		if(counter>lastcounter)
 		{
+			//if so we declare the ans to be temp1(the pointer to this local high "maybe")
 			ans=temp1;
-			lastcounter=counter;
+			//and set the NEW alltime high
+			lastcounter=counter; 
 		}
-		
+		//reset temp2 as the inner loop has to go all along the list again
 		temp2=head;
-
+		//moving on, get to the next "maybe"
 		temp1=temp1->next;
 	}
-	
+	if(ans==NULL)
+	{
+		cout<<"\n\n In the list there is no most common location "<<endl;
+	    system("pause>nul");
+	    return;
+		
+	}
 	cout<<"\n\n In the list the most common location is: "<<ans->location<<endl;
 	system("pause>nul");
 	return;
 	
 }
 
+//suggest friends based on the conditions(difference in age<15 and either location or occupation is same
 void suggest_friends(node *head)
 {
 	system("CLS");
@@ -830,6 +872,7 @@ void suggest_friends(node *head)
 	return;
 }
 
+//maintaining the order it segregates all users with odd ages to the front of the list
 void segregate_age(node **head)
 {
 	system("CLS");
@@ -883,10 +926,72 @@ void segregate_age(node **head)
 	system("pause>nul");
 }
 
+//reverses the whole list by switching the link (not the data)
+void reverse(node **head)
+{
+	system("CLS");
+	//we need 3 pointers which traverse along the linked list
+	node *temp,*temp1,*temp2;
+	temp=*head;
+	if(*head==NULL)
+	{
+		cout<<"\n\n\n This is a Empty List, Nothing to Reverse.\n\n";
+		system("pause>nul");
+		return;
+	}
+	//check if its a list with 1 element
+	if(temp->next==NULL)
+	{
+		cout<<"\n\n\n This is a List with only a single user, Nothing to Reverse\n\n";
+		system("pause>nul");
+		return;
+	}
+	// temp then temp1 and finally temp2, they move along the list as a group..
+	//as we manipulate the links of any two elements with temp and temp1, we use temp2 to help resume the traversing
+	//temp and temp1 serve as the link reversers while temp2 handles the traversing
+	temp1=temp->next;
+	temp2=temp1->next;
+	
+	//only 2 nodes in the list
+	if((temp->next)->next==NULL)
+	{
+		//temp is pointing to the first node along with *head(the head pointer)
+		//temp1 is pointing to the 2nd AND last node, therefore temp2 is pointing to NULL
+		//we set the last node to point to the first node
+		temp1->next=temp;
+		// set the first element to point to NULL signifying it is now the 2nd AND last node
+		temp->next=NULL; //or equal to temp2
+		//finally the head pointer is moved to the "previous" second and last node
+		*head=temp1;
+		cout<<"\n\n\n This List has been Reversed\n\n";
+	    system("pause>nul");
+		return;
+	}
+	temp->next=NULL;
+	// if 3 or more than 3 elements are there in the list
+	while(temp2->next!=NULL)//basically till   ((temp->next)->next)->next)!=NULL
+	{
+		//the link reversal from temp pointing to what temp1 was pointing to
+		temp1->next=temp; // now temp1 is pointing to what temp is pointing to
+		//movement of the 3 pointers
+		//as temp and temp1 reposition to reverse the next link between the pair of nodes
+		temp=temp1;
+		temp1=temp2;
+		//traversing over the list by temp2
+		temp2=temp2->next;
+	}
+	//now we have to deal with the last 3 nodes..
+	temp1->next=temp;
+	temp2->next=temp1;
+	*head=temp2;
+	cout<<"\n\n\n This List has been Reversed\n\n";
+	system("pause>nul");
+	
+}
+
 // the driver function for implementing the 10 Functions in a menu form
 int main()
 {
-	
 	int choice=0;
 	class node *head = NULL; //THE head (node pointer) is intialized and made to point to NULL
 	char name_user[20];
@@ -936,6 +1041,9 @@ int main()
 		case 9:segregate_age(&head);
 		break;
 		
+		case 10:reverse(&head);
+		break;
+		
 		case 0: exit(0);
 		
 	}
@@ -943,9 +1051,6 @@ int main()
 	display(&head);
 	system("CLS");
     } //while loop to infinity
-    
-    cout<<"\ncheck\n";
-    system("pause>nul");
 	return 0;
 }
 
