@@ -14,13 +14,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="42dp"
+        android:ems="10"
         android:hint="@string/edit_message"
-        android:inputType="textLongMessage"
-        android:ems="10" >
-
-    <requestFocus />
-    </EditText>
+        android:inputType="textLongMessage" />
 
     <Button
         android:id="@+id/button1"
@@ -28,8 +25,142 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/editText1"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="115dp"
+        android:layout_marginTop="37dp"
         android:onClick="nextpage"
         android:text="@string/button" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:text="@string/colour"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <RadioButton
+        android:id="@+id/radioButtonBlack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/radioButtonGreen"
+        android:layout_below="@+id/radioButtonGreen"
+        android:onClick="black"
+        android:text="@string/black"
+        android:textColor="#000000" />
+
+    <RadioButton
+        android:id="@+id/radioButtonRed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/radioButtonBlack"
+        android:layout_below="@+id/radioButtonBlack"
+        android:onClick="red"
+        android:text="@string/red"
+        android:textColor="#ff0000" />
+
+    <RadioButton
+        android:id="@+id/radioButtonBlue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/radioButtonRed"
+        android:layout_below="@+id/radioButtonRed"
+        android:onClick="blue"
+        android:text="@string/blue"
+        android:textColor="#0000FF" />
+
+    <RadioButton
+        android:id="@+id/radioButtonGreen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="14dp"
+        android:onClick="green"
+        android:text="@string/green"
+        android:textColor="#008000" />
+
+    <RadioButton
+        android:id="@+id/radioButtonYellow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/radioButtonBlue"
+        android:layout_below="@+id/radioButtonBlue"
+        android:onClick="yellow"
+        android:text="@string/yellow"
+        android:textColor="#FFFF00" />
+
+    <RadioButton
+        android:id="@+id/radioButtonPink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/radioButtonYellow"
+        android:layout_below="@+id/radioButtonYellow"
+        android:onClick="pink"
+        android:text="@string/pink"
+        android:textColor="#00FFFF" />
+
+    <CheckBox
+        android:id="@+id/checkBoxitalics"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/radioButtonGreen"
+        android:layout_alignRight="@+id/button1"
+        android:text="@string/italics" />
+
+    <CheckBox
+        android:id="@+id/checkBoxbold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/checkBoxitalics"
+        android:layout_below="@+id/checkBoxitalics"
+        android:text="@string/bold" />
+
+    <CheckBox
+        android:id="@+id/checkBoxunderlined"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/checkBoxbold"
+        android:layout_below="@+id/checkBoxbold"
+        android:text="@string/underlined" />
+
+    <Button
+        android:id="@+id/button2"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView3"
+        android:layout_alignBottom="@+id/textView3"
+        android:layout_centerHorizontal="true"
+        android:onClick="add"
+        android:text="@string/add" />
+
+    <Button
+        android:id="@+id/button3"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:onClick="subtract"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView3"
+        android:layout_alignBottom="@+id/textView3"
+        android:layout_toRightOf="@+id/checkBoxitalics"
+        android:text="@string/subtract" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/radioButtonYellow"
+        android:layout_alignRight="@+id/checkBoxbold"
+        android:text="@string/number"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/button3"
+        android:layout_below="@+id/radioButtonBlack"
+        android:text="@string/font"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

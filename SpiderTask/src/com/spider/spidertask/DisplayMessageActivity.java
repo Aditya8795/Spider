@@ -3,7 +3,11 @@ package com.spider.spidertask;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Html;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,10 +33,44 @@ public class DisplayMessageActivity extends Activity {
 		Intent intent =getIntent();
 		// get the message (value) using EXTRA_MESSAGE (the key)
 		String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE); 
-		
+		//get which colour it is and default is black (6)
+		int colour = intent.getIntExtra(MainActivity.COLOUR, 6);
 		//store this message into the prexisting Textview, which has the id textview1 in the xml file (fragment_display_message)
 		//using find viewbyid, we establish the handle on the textview
 		TextView text = (TextView)findViewById(R.id.textView1);
+		//decide which color it is and set it
+				if(colour==1) text.setTextColor(Color.parseColor("green"));
+				if(colour==2) text.setTextColor(Color.parseColor("red"));
+				if(colour==3) text.setTextColor(Color.parseColor("blue"));
+				if(colour==4) text.setTextColor(Color.parseColor("yellow"));
+				if(colour==5) text.setTextColor(Color.parseColor("cyan"));
+				if(colour==6) text.setTextColor(Color.parseColor("black"));
+		//Now take the font size
+		int font_size=intent.getIntExtra(MainActivity.FONT_SIZE, 20);
+		text.setTextSize(TypedValue.COMPLEX_UNIT_SP, font_size);
+		//now we take the status of bold,underlined and italics
+		int bold = intent.getIntExtra("bold", 0);
+		int underlined = intent.getIntExtra("underlined", 0);
+		int italics = intent.getIntExtra("italics", 0);
+		if(bold==1 && italics==0)
+		{
+			text.setTypeface(null, Typeface.BOLD); 
+		}
+		if(italics==1 && bold==0)
+		{
+			text.setTypeface(null, Typeface.ITALIC); 
+		}
+		if(italics==1 && bold==1)
+		{
+			text.setTypeface(null, Typeface.BOLD_ITALIC); 
+		}
+		
+		if(underlined==1)
+		{
+			String s = "<u>" +message+"</u>";
+			text.setText(Html.fromHtml(s));
+			return;
+		}
 		//set the value of the string in the textveiw1 as the message
 		text.setText(message);
 		

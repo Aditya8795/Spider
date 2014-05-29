@@ -10,5 +10,19 @@
     <string name="title_activity_next">NextActivity</string>
     <string name="title_activity_display_message">DisplayMessageActivity</string>
     <string name="show">Nothing was Entered</string>
+    <string name="colour">Choose Colour</string>
+    <string name="green">Green</string>
+    <string name="red">Red</string>
+    <string name="blue">Blue</string>
+    <string name="black">Black</string>
+    <string name="yellow">Yellow</string>
+    <string name="pink">cyan</string>
+    <string name="font">Change Font Size</string>
+    <string name="bold">Bold</string>
+    <string name="italics">Italics</string>
+    <string name="underlined">Underlined</string>
+    <string name="add">+</string>
+    <string name="subtract">-</string>
+    <string name="number">29</string>
 
 </resources>
