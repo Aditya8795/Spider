@@ -19,16 +19,6 @@
         android:hint="@string/edit_message"
         android:inputType="textLongMessage" />
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editText1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="37dp"
-        android:onClick="nextpage"
-        android:text="@string/button" />
-
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
@@ -99,68 +89,82 @@
         android:text="@string/pink"
         android:textColor="#00FFFF" />
 
-    <CheckBox
-        android:id="@+id/checkBoxitalics"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/radioButtonGreen"
-        android:layout_alignRight="@+id/button1"
-        android:text="@string/italics" />
-
-    <CheckBox
-        android:id="@+id/checkBoxbold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/checkBoxitalics"
-        android:layout_below="@+id/checkBoxitalics"
-        android:text="@string/bold" />
-
-    <CheckBox
-        android:id="@+id/checkBoxunderlined"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/checkBoxbold"
-        android:layout_below="@+id/checkBoxbold"
-        android:text="@string/underlined" />
 
     <Button
-        android:id="@+id/button2"
-        style="?android:attr/buttonStyleSmall"
+        android:id="@+id/button1"
+        style="?android:attr/buttonBarButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView3"
-        android:layout_alignBottom="@+id/textView3"
-        android:layout_centerHorizontal="true"
-        android:onClick="add"
-        android:text="@string/add" />
-
-    <Button
-        android:id="@+id/button3"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:onClick="subtract"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView3"
-        android:layout_alignBottom="@+id/textView3"
-        android:layout_toRightOf="@+id/checkBoxitalics"
-        android:text="@string/subtract" />
+        android:layout_below="@+id/editText1"
+        android:layout_marginTop="28dp"
+        android:layout_toRightOf="@+id/radioButtonYellow"
+        android:onClick="nextpage"
+        android:text="@string/button" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/radioButtonYellow"
-        android:layout_alignRight="@+id/checkBoxbold"
+        android:layout_below="@+id/radioButtonYellow"
+        android:layout_toRightOf="@+id/button1"
         android:text="@string/number"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <CheckBox
+        android:id="@+id/checkBoxunderlined"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/radioButtonRed"
+        android:layout_alignRight="@+id/textView2"
+        android:text="@string/underlined" />
+
+    <CheckBox
+        android:id="@+id/checkBoxbold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/radioButtonGreen"
+        android:layout_alignBottom="@+id/radioButtonGreen"
+        android:layout_alignLeft="@+id/checkBoxunderlined"
+        android:text="@string/bold" />
+
+    <CheckBox
+        android:id="@+id/checkBoxitalics"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/checkBoxbold"
+        android:layout_alignLeft="@+id/checkBoxbold"
+        android:text="@string/italics" />
+
+    <Button
+        android:id="@+id/button3"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView3"
+        android:layout_alignBottom="@+id/textView3"
+        android:layout_marginLeft="14dp"
+        android:layout_toRightOf="@+id/textView3"
+        android:onClick="subtract"
+        android:text="@string/subtract" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/button3"
-        android:layout_below="@+id/radioButtonBlack"
+        android:layout_alignTop="@+id/radioButtonBlue"
+        android:layout_toRightOf="@+id/textView1"
         android:text="@string/font"
         android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/button2"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView3"
+        android:layout_alignBottom="@+id/textView3"
+        android:layout_alignRight="@+id/button1"
+        android:onClick="add"
+        android:text="@string/add" />
 
 </RelativeLayout>

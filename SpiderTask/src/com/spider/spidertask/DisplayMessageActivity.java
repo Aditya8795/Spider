@@ -71,6 +71,7 @@ public class DisplayMessageActivity extends Activity {
 			text.setText(Html.fromHtml(s));
 			return;
 		}
+		
 		//set the value of the string in the textveiw1 as the message
 		text.setText(message);
 		

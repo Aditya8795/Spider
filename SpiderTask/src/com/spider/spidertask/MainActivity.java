@@ -1,5 +1,8 @@
 package com.spider.spidertask;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.spider.spidertask.R;
 
 import android.app.Activity;
@@ -14,13 +17,17 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
+	
 	//6 because if NO radio button is checked then the colour is black(6 indicates black)
 	int colour=6;
+	//this stores the font size (default is 29)
 	int font=29;
+	//this stores the status of the 3 check boxes for b,i and u
 	int bold=0,italics=0,underlined=0;
 	//check out the tosend function, for use in a intent we define the KEY for the message
 	public final static String EXTRA_MESSAGE = "com.spider.spidertask.MESSAGE";
@@ -30,12 +37,19 @@ public class MainActivity extends Activity {
 	//NOW the key for font size
 	public final static String FONT_SIZE = "com.spider.spidertask.FONT";
 
+	//spinner variables
+	Spinner spinner1;
+	//list variable
+	List<String> listFont = new ArrayList<String>();
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
 		//on the opening of the app this oncreate() is called as per the app lifecycle
 		//we define the activity layout with setcontentview as activity_main
 		setContentView(R.layout.activity_main);
+		
 		/*
 		 * you will get the Bundle null when activity get starts firt time. 
 		 * and the Bundle argument to onCreate(Bundle) will be non-null if and only if 
@@ -54,6 +68,7 @@ public class MainActivity extends Activity {
 		 // However, if we're being restored from a previous state,
         // then we don't need to do anything and should return or else
         // we could end up with overlapping existing fragments thats why we check if savedinstancestate is NULL
+		
 		if (savedInstanceState == null) {
 			
 			//using fragment manager we perform fragment transactions like add,remove fragments..
@@ -64,7 +79,11 @@ public class MainActivity extends Activity {
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
 		
+		
+		
 	}
+	
+	
 
 // i deleted the dropdown settings (at the top right corner of the screen)
 	
@@ -83,6 +102,7 @@ public class MainActivity extends Activity {
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.fragment_main, container,
 					false);
+			
 			return rootView; //as far as I understood, it returns the "highest parent view" of the current screen of the fragment???
 		}
 	}
@@ -187,6 +207,25 @@ public class MainActivity extends Activity {
         intent.putExtra("bold",bold);
         intent.putExtra("italics",italics);
         intent.putExtra("underlined",underlined);
+        //if the text field is empty
+        if(message.getText().toString().length() == 0)
+        {
+        	Context context = getApplicationContext();
+			CharSequence text = "You Havent Entered Anything!!";
+			int duration = Toast.LENGTH_SHORT;
+
+			Toast toast = Toast.makeText(context, text, duration);
+			toast.show();
+			return;
+        }
+        
+        //COULDNT implement spinner
+        //get a handle on the spinner
+        //Spinner spinner = (Spinner) findViewById(R.id.spinner1);
+        //get the info on the font
+        //String Text = spinner.getSelectedItem().toString();
+        //store this info (on which font it is) in the intent using extra
+        
 		//now we can start the intent..
 		startActivity(intent);
 		
@@ -298,5 +337,6 @@ public class MainActivity extends Activity {
 		if(radio1.isChecked()) radio1.setChecked(false);
 	}
 	
+
 	
 }
