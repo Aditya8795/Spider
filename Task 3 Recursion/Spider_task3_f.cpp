@@ -85,6 +85,7 @@ so...  T(n)=2*T(n-1)+1
 //from[f], dest[d] and temp[t] are the top most elements in the array (rod) (the ones that can be moved)
 //and bottom_dest keeps track of the dest buildup, as we fill in the larger disks in proper order 
 //we dont disturb the arranged disks (disks on and below dest[bottom_dest])
+
 void tower_hanoi(int from[50], int dest[50], int temp[50], int disk, int f, int d, int t, int bottom_dest=0)
 {
 	//check for base condition
