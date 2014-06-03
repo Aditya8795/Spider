@@ -286,9 +286,10 @@ public class MainActivity extends Activity {
 	}
 	public void yellow(View v)
 	{
+		//didnt like yellow
 		//we access the edit text and get the text the user entered
 		EditText edit = (EditText)findViewById(R.id.editText1);
-		edit.setTextColor(Color.parseColor("yellow"));
+		edit.setTextColor(Color.parseColor("gray"));
 		
 		RadioButton radio1 = (RadioButton)findViewById(R.id.radioButtonGreen);
 		RadioButton radio2 = (RadioButton)findViewById(R.id.radioButtonRed);

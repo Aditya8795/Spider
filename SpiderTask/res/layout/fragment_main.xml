@@ -77,7 +77,7 @@
         android:layout_below="@+id/radioButtonBlue"
         android:onClick="yellow"
         android:text="@string/yellow"
-        android:textColor="#FFFF00" />
+        android:textColor="#C0C0C0" />
 
     <RadioButton
         android:id="@+id/radioButtonPink"

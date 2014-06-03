@@ -42,7 +42,7 @@ public class DisplayMessageActivity extends Activity {
 				if(colour==1) text.setTextColor(Color.parseColor("green"));
 				if(colour==2) text.setTextColor(Color.parseColor("red"));
 				if(colour==3) text.setTextColor(Color.parseColor("blue"));
-				if(colour==4) text.setTextColor(Color.parseColor("yellow"));
+				if(colour==4) text.setTextColor(Color.parseColor("gray"));
 				if(colour==5) text.setTextColor(Color.parseColor("cyan"));
 				if(colour==6) text.setTextColor(Color.parseColor("black"));
 		//Now take the font size
