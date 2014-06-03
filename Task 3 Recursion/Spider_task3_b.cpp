@@ -2,6 +2,12 @@
 
 using namespace std;
 
+/* a recurrence relation is an equation that recursively defines a sequence, 
+once one or more initial terms are given: each further term of the sequence 
+is defined as a function of the preceding terms
+ie, f(i)=f(i-1)-1 or f(i+1)=f(i)-1
+*/
+
 //prints numbers from 1 to n in descending order (let this be 'the' series) ( n,(n-1), (n-2), (n-3), (n-4)....... )
 void descending_natural(int n)
 {

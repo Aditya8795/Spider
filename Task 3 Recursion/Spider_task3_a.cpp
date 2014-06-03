@@ -2,18 +2,24 @@
 
 using namespace std;
 
+/* a recurrence relation is an equation that recursively defines a sequence, 
+once one or more initial terms are given: each further term of the sequence 
+is defined as a function of the preceding terms
+ie, f(i)=f(i-1)+1 or f(i+1)=f(i)+1
+*/
+
 //prints numbers from 1 to n in ascending order (let this be 'the' series) (1, 2, 3, ...... n)
 void ascending_natural(int n)
 {
 	/*if f(i) is the ith term in the series consisting of n terms ( so i
 	
 	        { 1       for i=1    (this is the base case)
-	f(i) =  { f(i)-1  for i>1    (this is the Recursion Relation)
+	f(i) =  { f(i-1)+1  for i>1    (this is the Recursion Relation)
 		     
 	*/
 	
 	
-	// f(1) is n then f(2) is n-1 and so on...
+	// f(1) is 1 then f(2) is 2 and so on...
 	
 	// check for the base condition here ==> if(i==n) [ie if we reached the last term]
 	if(n==1)
