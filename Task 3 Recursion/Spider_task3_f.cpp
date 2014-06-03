@@ -1,35 +1,7 @@
  #include<iostream>
- #include <cstdio>
+ #include<cstdio>
+ #include<math.h>
  using namespace std;
-
-
-//diplay function
-void display(int a[50], int b[50], int c[50], int f, int d, int t)
-{
-	int i;
-	//print a the SOURCE
-	cout<<"\n A \n";
-	for(i=0;i<f;i++)
-	{
-		//store the values in the source rod
-		cout<<"\t"<<a[i]<<"\t";
-	}
-	//print B the DESTINATION
-	cout<<"\n B \n";
-	for(i=0;i<d;i++)
-	{
-		//store the values in the source rod
-		cout<<"\t"<<b[i]<<"\t";
-	}
-	//print C the TEMP
-	cout<<"\n C \n";
-	for(i=0;i<f;i++)
-	{
-		//store the values in the source rod
-		cout<<"\t"<<c[i]<<"\t";
-	}
-	//getchar();
-}
 
 /*
 In the Tower Of Hanoi Problem, we have the 3 Rods A, B, and C
@@ -81,37 +53,32 @@ so...  T(n)=2*T(n-1)+1
 
 */
 
-//here f,d, and t are the top indexes of the arrays to keep us informed that
-//from[f], dest[d] and temp[t] are the top most elements in the array (rod) (the ones that can be moved)
-//and bottom_dest keeps track of the dest buildup, as we fill in the larger disks in proper order 
-//we dont disturb the arranged disks (disks on and below dest[bottom_dest])
 
-void tower_hanoi(int from[50], int dest[50], int temp[50], int disk, int f, int d, int t, int bottom_dest=0)
+//here 'from', 'dest', and 'temp' can be 1,2 or 3 depending on whether it is the peg A,B OR C it signifies
+
+void tower_hanoi(int from, int dest, int temp, int disk)
 {
 	//check for base condition
 	if(disk==0)
 	{
-		// at dest[d] the previous top element was stored
-		d++; //update the top element of the dest
-		//move the disk directly to dest from from :)
-		dest[d]=from[f];
-		f--; // virtually delete the top element of from
+		cout<<"\n Move disk "<<disk<<" from "<<from<<" to "<<dest<<"\n";
 	}
 	else
 	{
 		//as the disk isnt at the top yet we go deeper one more level, by choosing the smaller disk (ans so on... )
-		tower_hanoi(from,dest,temp,disk-1,f,d,t,bottom_dest);
+		tower_hanoi(from,temp,dest,disk-1);
 		//by the time the control passes back here, by recursion, those n-1 disks would have been shifted to dest from from!!
 		//now we can just move the LARGE disk from the bottom of from (n) and directly move it to dest
-		dest[bottom_dest]=from[0]; //we put the nth disk (of this call stack) in the lowest AVAILABLE position in dest
-		bottom_dest++; // we change the lowest available position
+		cout<<"\n Move disk "<<disk<<" from "<<from<<" to "<<dest<<"\n";
+	    //we put the nth disk (of this call stack) in the lowest AVAILABLE position in dest
+		// we change the lowest available position
 		//now we need to get the whole thing set to work for the NEXT call stack where the current (n-1)th stack
 		//becomes the nth stack.. so now we need to get the n-1th disk (we have handled the REAL nth disk, as far as we 
 		//are concered now we have n-1 disks and 3 EMPTY rods)
 		// we could just plainly call the funtion and recursion would handle the rest, handling the largest disk at a time
 		// but the n-1 disks are not settled happily in the from rod and the temp rod is not free!
 		// after this call stack the temp rod has become the from rod and vice versa.. .so a minor change in arguments
-		tower_hanoi(temp,dest,from,disk-1,f,d,t,bottom_dest);
+		tower_hanoi(temp,dest,from,disk-1);
 	
 	}
 
@@ -120,11 +87,11 @@ void tower_hanoi(int from[50], int dest[50], int temp[50], int disk, int f, int 
 //driver function
 int main()
 {
-	int a[50],b[50],c[50],n,i;
+	int n;
 	
 	tryagain:
 	
-	cout<<"\n\n Enter the total number of disk, for the tower of hanoi \n";
+	cout<<"\n\n Enter the total number of disks, for the tower of hanoi \n";
 	cin>>n;
 	
 	//invalid input
@@ -133,25 +100,16 @@ int main()
 		cout<<"\n\n invalid input, enter a interger greater than or equal to 1\n TRY AGAIN \n";
 		goto tryagain;
 	}
-	
-	//assemble the tower..
-	for(i=0;i<n;i++)
+	else
 	{
-		//store the values in the source rod
-		a[i]=n-i-1;
+		cout<<"\n\n Follow the following "<<pow(2,n)-1<<" steps \n";
 	}
-	cout<<a[0]<<"\t";
-	cout<<a[1]<<"\t";
-	cout<<a[2]<<"\t\n";
-	//the largest disk is n-1 at the (n-1)th index of a
-	tower_hanoi(a,b,c,(n-1),(n-1),-1,-1); 
-	// -1 index informs them that the rod is EMPTY,0 would have ment the first element is occupied
-	cout<<b[0]<<"\n\t";
-	cout<<b[1]<<"\t";
-	cout<<b[2]<<"\t\n";
-	cout<<a[0]<<"\t";
-	cout<<a[1]<<"\t";
-	cout<<a[2]<<"\t\n";
+	
+	//the largest disk is n-1 as its 0th disk, 1st disk, and so on till (n-1)th disk
+	//from the 1st rod to the 2nd rod using 3rd rod as temp...
+	tower_hanoi(1,2,3,(n-1)); 
+	
+	cout<<"\n\n We have completed the Tower of Honoi!! \n";
 
 	return 0;
 }
