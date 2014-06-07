@@ -105,18 +105,22 @@ public class MainActivity extends Activity {
 			getFragmentManager().beginTransaction()
 			.replace(R.id.container, new LatLanFragment()).commit();
 		}
-
+        //in the case user wants to proceed with the latest available info (lat,lon or address) and see it in the map
 		else if(radio2.isChecked()){
-			//check if lat lan is available
+			//check if lat lan is available and is the latest (you can enter both)
 			if(checklatlan==1){
-				
+				// this is a implicit intent used to request that another capable app show a specified location on a map
+				// the "geo:0,0?q=" tag is used to signify the next part is the query term (hence the q)
 				final Intent myIntent = new Intent(
 					    android.content.Intent.ACTION_VIEW,
 					    Uri.parse( "geo:0,0?q=" + lat + "," + lon )
 					);
 				startActivity(myIntent);
 			}
+			//check if address is available and is the latest (you can enter both)
 			else if(checkaddress==1){
+				// this is a implicit intent used to request that another capable app show a specified location on a map
+				// the "geo:0,0?q=" tag is used to signify the next part is the query term (hence the q)
 				final Intent myIntent = new Intent(
 					    android.content.Intent.ACTION_VIEW,
 					    Uri.parse( "geo:0,0?q=" + address )
@@ -124,13 +128,13 @@ public class MainActivity extends Activity {
 				startActivity(myIntent);
 			}
 			else{
+				// in the case no information is available 
 				Context context = getApplicationContext();
 				CharSequence text = "Sorry, You havent Entered the latitude and longitude and neither the Address";
 				int duration = Toast.LENGTH_SHORT;
 
 				Toast toast = Toast.makeText(context, text, duration);
 				toast.show();
-				return;
 			}
 		}
 		// we need to accept the address as a string, so we replace the existing PlaceholderFragment fragment which was
@@ -151,6 +155,7 @@ public class MainActivity extends Activity {
 		
 	}
 	
+	// this function is called when the back of the lan/lon accepter fragment (LatLanFragment) is clicked
 	public void back(View v){
 		//establish handles
 		EditText lat_edit = (EditText)findViewById(R.id.editText1);
@@ -160,11 +165,13 @@ public class MainActivity extends Activity {
 		try{
 			lat=Float.valueOf(lat_edit.getText().toString());
 			lon=Float.valueOf(lon_edit.getText().toString());
+			// as info has been recieved we update the flag variable
 			checklatlan=1;
 		}
 		catch(NumberFormatException e){
 			e.printStackTrace();
 		}
+		// in the case the info hasnt been entered, we notify the user
 		if(checklatlan==0){
 			Context context = getApplicationContext();
 			CharSequence text = "You havent Entered both the latitude and longitude";
@@ -173,6 +180,7 @@ public class MainActivity extends Activity {
 			Toast toast = Toast.makeText(context, text, duration);
 			toast.show();
 		}
+		//else if the data HAS been recived
 		else{
 			Context context = getApplicationContext();
 			CharSequence text = "Your lat/lon Values have been saved!";
@@ -180,6 +188,8 @@ public class MainActivity extends Activity {
 
 			Toast toast = Toast.makeText(context, text, duration);
 			toast.show();
+			// we have lat/lan as the LATEST data as of now, so even if address has been entered we have to change the
+			// flag variable of address to 0, signifing that it was Old News ;)
 			checkaddress=0;
 		}
 		//get back to the main fragment
@@ -187,13 +197,15 @@ public class MainActivity extends Activity {
 		.replace(R.id.container, new PlaceholderFragment()).commit();
 	}
 	
+	// this is the function called when back is clicked inside of the AddressFragment
 	public void backaddress(View v){
 		//establish handles
 		EditText address_edit = (EditText)findViewById(R.id.editText1);
 		// get the address as a string
 		address = address_edit.getText().toString();
+		// assume the string is valid and not empty
 		checkaddress=1;
-		// check if he has entered anything
+		// check if he has entered anything 
 		if(address.matches("")){
 			Context context = getApplicationContext();
 			CharSequence text = "You Havent Entered the Address!!";
@@ -201,6 +213,7 @@ public class MainActivity extends Activity {
 
 			Toast toast = Toast.makeText(context, text, duration);
 			toast.show();
+			//as our assumption is wrong reset the flag variable
 			checkaddress=0;
 		}
 		else{
@@ -210,6 +223,7 @@ public class MainActivity extends Activity {
 
 			Toast toast = Toast.makeText(context, text, duration);
 			toast.show();
+			//as the string has been recieved and is valid, the lan/lon info is Old news ;) so we update the flag variable for lan/lon
 			checklatlan=0;
 		}
 		//get back to the main fragment
@@ -218,6 +232,7 @@ public class MainActivity extends Activity {
 	
 	}
 	
+	// we define the fragment which handles the input for the address
 	public static class AddressFragment extends Fragment {
 
 		public AddressFragment() {
@@ -234,6 +249,7 @@ public class MainActivity extends Activity {
 		
 	}
 	
+	// we define the fragment which handles the input for the lat/lon
 	public static class LatLanFragment extends Fragment {
 
 		public LatLanFragment() {
