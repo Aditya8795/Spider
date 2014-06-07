@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">SpiderMaps</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="address">Enter Address</string>
+    <string name="latlan">Enter coordinates (lat,long)</string>
+    <string name="go">GO</string>
+    <string name="gomap">Go to current location Depending upon the choice of the user</string>
+    <string name="latlantext">Enter The Coordinates</string>
+    <string name="lat">Enter latitude</string>
+    <string name="lon">Enter longitude</string>
+    <string name="back">Back</string>
+    <string name="n">N</string>
+    <string name="e">E</string>
+
+</resources>

@@ -1,7 +1,5 @@
 package com.spider.spidertask;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import com.spider.spidertask.R;
 
@@ -17,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,10 +34,6 @@ public class MainActivity extends Activity {
 	//NOW the key for font size
 	public final static String FONT_SIZE = "com.spider.spidertask.FONT";
 
-	//spinner variables
-	Spinner spinner1;
-	//list variable
-	List<String> listFont = new ArrayList<String>();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
